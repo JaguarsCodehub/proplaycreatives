@@ -156,13 +156,13 @@ const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
       {/* <Features /> */}
 
       <div>
-        <ImageGeneration>
+        {/* <ImageGeneration> */}
           <img
             className='aspect-video object-cover w-3xl'
-            src='/focus.jpg'
+            src='/brains.jpg'
             alt='21st og generation'
           />
-        </ImageGeneration>
+        {/* </ImageGeneration> */}
       </div>
     </motion.section>
   );

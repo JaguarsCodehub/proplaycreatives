@@ -43,7 +43,7 @@ export const ImageGeneration = ({ children }: ImageGenerationProps) => {
   }, [duration]);
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 w-full max-w-full overflow-hidden'>
       <motion.span
         className='bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent text-xl font-medium'
         initial={{ backgroundPosition: '200% 0' }}
@@ -60,10 +60,10 @@ export const ImageGeneration = ({ children }: ImageGenerationProps) => {
         {loadingState === 'generating' && 'Creating image. May take a moment.'}
         {loadingState === 'completed' && 'Image created.'}
       </motion.span>
-      <div className='relative rounded-xl border bg-card max-w-2xl overflow-hidden'>
+      <div className='relative rounded-xl border bg-card max-w-2xl w-full overflow-hidden'>
         {children}
         <motion.div
-          className='absolute w-full h-[125%] -top-[25%] pointer-events-none backdrop-blur-3xl'
+          className='absolute w-full h-[125%] -top-[25%] pointer-events-none backdrop-blur-3xl left-0 right-0'
           initial={false}
           animate={{
             clipPath: `polygon(0 ${progress}%, 100% ${progress}%, 100% 100%, 0 100%)`,

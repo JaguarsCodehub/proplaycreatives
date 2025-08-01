@@ -9,7 +9,7 @@ export function Features() {
             <h2 className='text-2xl font-bold tracking-tighter text-white sm:text-3xl md:text-4xl lg:text-5xl'>
               Bridging Brands and Bold Creators for Campaigns That Convert
             </h2>
-            <p className='max-w-[600px] text-base sm:text-lg text-muted-foreground'>
+            <p className='max-w-[600px] text-base sm:text-lg text-white'>
               From Samsung to Red Bull, we handpick creators who elevate your
               brand storytelling—and drive measurable growth.
             </p>
@@ -20,11 +20,11 @@ export function Features() {
               </Button>
             </div>
           </div>
-          <div className='flex flex-col space-y-6 rounded-xl bg-zinc-900/50 p-5 sm:p-8'>
+          <div className='border-2 border-white flex flex-col space-y-6 rounded-xl bg-zinc-900/50 p-5 sm:p-8'>
             <h3 className='text-xl font-bold tracking-tight text-white sm:text-2xl md:text-3xl'>
               Why Pro Play Creatives?
             </h3>
-            <p className='text-sm sm:text-base text-muted-foreground'>
+            <p className='text-sm sm:text-base text-white'>
               At Pro Play Creatives, we don’t just bring brands and creators
               together—we build collaborations grounded in purpose, audience
               insight, and authenticity. With campaigns delivered for Samsung,
@@ -32,7 +32,7 @@ export function Features() {
               know-how with creator-first creativity to produce work that
               resonates and converts.
             </p>
-            <ul className='list-disc space-y-2 pl-5 text-sm sm:text-base text-muted-foreground'>
+            <ul className='list-disc space-y-2 pl-5 text-sm sm:text-base text-white'>
               <li>Partnered with Fortune-level and emerging brands</li>
               <li>Network of 200+ vetted creators across niches</li>
               <li>Campaigns that bring viral reach and real ROI</li>
