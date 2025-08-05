@@ -7,6 +7,7 @@ import { Features } from './features-10';
 import { Case } from './cases-with-infinite-scroll';
 import { ImageGeneration } from './ai-chat-image-generation';
 import { Button } from './button';
+import { HeroGeometric } from './shape-landing-hero';
 
 const sampleApps = [
   {
@@ -61,60 +62,15 @@ interface SectionProps {
 }
 
 const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
-
-   const [openApps, setOpenApps] = useState<string[]>(['finder', 'safari']);
-
-   const handleAppClick = (appId: string) => {
-     console.log('App clicked:', appId);
-
-     // Toggle app in openApps array
-     setOpenApps((prev) =>
-       prev.includes(appId)
-         ? prev.filter((id) => id !== appId)
-         : [...prev, appId]
-     );
-   };
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
-  return (
-    <motion.section
-      style={{ scale, rotate }}
-      className='sticky top-0 h-screen bg-white flex flex-col items-center text-black'
-    >
-      <div className='absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]'></div>
-
-      <h1 className='2xl:text-8xl text-5xl px-8 font-merriweather font-medium w-lg 2xl:w-7xl text-center mt-18 bg-gradient-to-r from-black to-zinc-400 bg-clip-text text-transparent'>
-        Creators. Brands. Culture. We Connect Them All.
-      </h1>
-      <div className='flex justify-center w-full'>
-        <p className='max-w-3xl mt-8 py-4 px-4 text-center text-2xl 2xl:text-4xl font-merriweather font-medium bg-gradient-to-r from-black to-zinc-500 bg-clip-text text-transparent'>
-          Your story deserves to be told by voices that matter, So{' '}
-          <span className='inline-block rounded-md px-2 bg-green-600 text-white mt-1'>We make the connections that matter.</span>
-        </p>
-      </div>
-
-      <div className='flex w-full flex-grow items-center justify-center overflow-hidden'>
-        {/* Desktop view: MacOS Dock */}
-        <div className='hidden lg:block'>
-          <MacOSDock
-            apps={sampleApps}
-            onAppClick={handleAppClick}
-            openApps={openApps}
-          />
-        </div>
-
-        {/* Mobile view: Buttons */}
-        <div className='sm:block lg:hidden z-50'>
-          <Button
-            variant='outline'
-            className='cursor-pointer mb-20 rounded-xl border-2 border-black bg-zinc-200 px-10 py-6 font-merriweather text-2xl font-bold text-black shadow-lg transition-all duration-300 ease-in-out hover:bg-black hover:text-white'
-          >
-            For Brands and Creators
-          </Button>
-        </div>
-      </div>
-    </motion.section>
-  );
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [5, 0]);
+   return (
+     <HeroGeometric
+       badge='Pro Play Creatives'
+       title1='Fueling the Creator Economy — '
+       title2='One Collab at a Time.'
+     />
+   );
 };
 
 const Section2: React.FC<SectionProps> = ({ scrollYProgress }) => {
