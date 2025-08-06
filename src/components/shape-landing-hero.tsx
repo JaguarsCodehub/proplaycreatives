@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { Circle, X, Users, Building2, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { FlipWords } from './flip-words';
 
 function ElegantShape({
   className,
@@ -444,20 +445,22 @@ function HeroGeometric({
               variants={fadeUpVariants}
               initial='hidden'
               animate='visible'
-              transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
               className='inline-flex font-poppins items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-gray-200/50 mb-6 md:mb-8 shadow-sm backdrop-blur-sm'
             >
               <Circle className='h-2 w-2 fill-rose-500' />
-              <span className='text-sm text-gray-600 tracking-wide'>{badge}</span>
+              <span className='text-sm text-gray-600 tracking-wide'>
+                {badge}
+              </span>
             </motion.div>
 
             <motion.div
               variants={fadeUpVariants}
               initial='hidden'
               animate='visible'
-              transition={{ duration: 1, delay: 0.7, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 0.7, ease: 'easeOut' }}
             >
-              <h1 className='text-4xl font-poppins sm:text-6xl md:text-7xl mb-4 md:mb-6 tracking-tight'>
+              <h1 className='text-4xl leading-22 font-poppins sm:text-6xl md:text-7xl mb-4 md:mb-6 tracking-tight'>
                 <span className='bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700'>
                   {title1}
                 </span>
@@ -468,6 +471,9 @@ function HeroGeometric({
                   )}
                 >
                   {title2}
+                  <FlipWords
+                    words={['gamers', 'brands', 'creators', 'investors']}
+                  />
                 </span>
               </h1>
             </motion.div>
@@ -476,22 +482,22 @@ function HeroGeometric({
               variants={fadeUpVariants}
               initial='hidden'
               animate='visible'
-              transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 0.9, ease: 'easeOut' }}
             >
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="group relative inline-flex items-center justify-center px-4 py-2 text-lg font-poppins font-semibold text-white bg-black rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                className='group relative inline-flex items-center justify-center px-4 py-2 text-lg font-poppins font-semibold text-white bg-black rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden'
               >
-                <span className=" relative z-10 flex items-center gap-2">
+                <span className=' relative z-10 flex items-center gap-2'>
                   <span className='text-sm'>Get Started</span>
                   <motion.div
                     animate={{ x: [0, 4, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className='w-5 h-5' />
                   </motion.div>
                 </span>
-                <div className="absolute inset-0 bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                <div className='absolute inset-0 bg-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full' />
               </button>
             </motion.div>
           </div>

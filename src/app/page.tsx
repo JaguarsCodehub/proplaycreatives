@@ -3,6 +3,7 @@ import HeroScrollAnimation from "@/components/hero-scroll-animation";
 import { Case } from '@/components/cases-with-infinite-scroll';
 import { Features } from '@/components/features-11';
 import { BrandGrid } from '@/components/brand-grid';
+import { BrandSlideshow } from '@/components/brand-slideshow';
 import { Footer } from '@/components/footer-section';
 import Link from 'next/link';
 
@@ -44,28 +45,11 @@ export default function Home() {
         <BrandGrid />
       </section>
 
+      {/* Brand Slideshow */}
+      <BrandSlideshow />
+
       {/* Footer */}
-      <footer className='bg-black text-white py-8 mt-8'>
-        <div className='max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 px-6'>
-          <div className='font-bold text-lg tracking-wide font-poppins'>
-            Pro Play Creatives
-          </div>
-          <nav className='flex flex-wrap gap-6 text-sm font-poppins'>
-            <Link href='/' className='hover:underline'>
-              Home
-            </Link>
-            <Link href='/about' className='hover:underline'>
-              About
-            </Link>
-            <Link href='/contact' className='hover:underline'>
-              Contact
-            </Link>
-            <Link href='/privacy' className='hover:underline'>
-              Privacy
-            </Link>
-          </nav>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

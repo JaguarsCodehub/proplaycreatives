@@ -67,8 +67,8 @@ const Section1: React.FC<SectionProps> = ({ scrollYProgress }) => {
    return (
      <HeroGeometric
        badge='Pro Play Creatives'
-       title1='Fueling the Creator Economy — '
-       title2='One Collab at a Time.'
+       title1='Powering the Next-Gen of Influence'
+       title2='with '
      />
    );
 };
