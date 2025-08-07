@@ -101,4 +101,46 @@ export async function GET() {
       { status: 500 }
     );
   }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { id } = await request.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Contact ID is required' },
+        { status: 400 }
+      );
+    }
+
+    const client = new MongoClient(MONGODB_URI);
+    await client.connect();
+
+    const db = client.db('proplaycreatives');
+    const collection = db.collection('contacts');
+
+    const result = await collection.deleteOne({ _id: id });
+
+    await client.close();
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json(
+        { error: 'Contact not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: 'Contact deleted successfully' },
+      { status: 200 }
+    );
+
+  } catch (error) {
+    console.error('Error deleting contact:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 } 

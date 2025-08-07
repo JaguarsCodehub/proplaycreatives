@@ -460,7 +460,7 @@ function HeroGeometric({
               animate='visible'
               transition={{ duration: 1, delay: 0.7, ease: 'easeOut' }}
             >
-              <h1 className='text-4xl leading-22 font-poppins sm:text-6xl md:text-7xl mb-4 md:mb-6 tracking-tight'>
+              <h1 className='text-4xl font-poppins sm:text-6xl md:text-7xl mb-4 md:mb-6 tracking-tight'>
                 <span className='bg-clip-text text-transparent bg-gradient-to-b from-gray-900 to-gray-700'>
                   {title1}
                 </span>

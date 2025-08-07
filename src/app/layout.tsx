@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter, Playfair_Display, Poppins, Montserrat, Cormor
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import HeroPill from '@/components/hero-pill';
+import AdminLink from '@/components/admin-link';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,6 +53,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${playfairDisplay.variable} ${poppins.variable} ${merriweather.variable} antialiased`}
       >
         <Navbar />
+        <AdminLink />
         {/* <HeroPill
           href='https://badget.tech/blog/introducing-Badget-ai'
           label='Introducing Badget.ai'
