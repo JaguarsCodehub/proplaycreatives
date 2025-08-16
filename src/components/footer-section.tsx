@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export function Footer() {
@@ -9,6 +9,18 @@ export function Footer() {
     email: '',
     message: ''
   });
+  
+  const [floatingElements, setFloatingElements] = useState<Array<{left: string, top: string, delay: string}>>([]);
+
+  useEffect(() => {
+    // Generate random positions for floating elements on client side only
+    const elements = [...Array(15)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 3}s`
+    }));
+    setFloatingElements(elements);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,14 +54,14 @@ export function Footer() {
           
           {/* Floating elements */}
           <div className="absolute inset-0">
-            {[...Array(15)].map((_, i) => (
+            {floatingElements.map((element, i) => (
               <div
                 key={i}
                 className="absolute w-2 h-2 bg-gradient-to-r from-gray-400/60 to-gray-500/60 rounded-full blur-sm"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
+                  left: element.left,
+                  top: element.top,
+                  animationDelay: element.delay,
                 }}
               ></div>
             ))}

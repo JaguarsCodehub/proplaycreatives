@@ -22,7 +22,9 @@ import ContactDetailModal from '@/components/contact-detail-modal';
 
 interface Contact {
   _id: string;
-  name: string;
+  name?: string; // For brands
+  channelName?: string; // For creators
+  channelLink?: string; // For creators
   email: string;
   category: 'brand' | 'creator';
   createdAt: string;
@@ -92,10 +94,14 @@ export default function AdminDashboard() {
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(contact =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.email.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      filtered = filtered.filter(contact => {
+        const nameToSearch = contact.category === 'brand' ? contact.name : contact.channelName;
+        return (
+          (nameToSearch && nameToSearch.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (contact.channelLink && contact.channelLink.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+      });
     }
 
     // Filter by category
@@ -109,8 +115,8 @@ export default function AdminDashboard() {
 
       switch (sortBy) {
         case 'name':
-          aValue = a.name.toLowerCase();
-          bValue = b.name.toLowerCase();
+          aValue = (a.category === 'brand' ? a.name : a.channelName)?.toLowerCase() || '';
+          bValue = (b.category === 'brand' ? b.name : b.channelName)?.toLowerCase() || '';
           break;
         case 'category':
           aValue = a.category;
@@ -134,13 +140,14 @@ export default function AdminDashboard() {
   };
 
   const exportToCSV = () => {
-    const headers = ['Name', 'Email', 'Category', 'Created At'];
+    const headers = ['Name/Channel', 'Email', 'Category', 'Channel Link', 'Created At'];
     const csvContent = [
       headers.join(','),
       ...filteredContacts.map(contact => [
-        `"${contact.name}"`,
+        `"${contact.category === 'brand' ? contact.name : contact.channelName}"`,
         `"${contact.email}"`,
         contact.category,
+        contact.channelLink ? `"${contact.channelLink}"` : '',
         new Date(contact.createdAt).toLocaleDateString()
       ].join(','))
     ].join('\n');
@@ -386,12 +393,23 @@ export default function AdminDashboard() {
                          <td className="px-8 py-6 whitespace-nowrap">
                            <div>
                              <div className="text-sm font-semibold text-gray-900 font-poppins">
-                               {contact.name}
+                               {contact.category === 'brand' ? contact.name : contact.channelName}
                              </div>
                              <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
                                <Mail className="w-4 h-4" />
                                {contact.email}
                              </div>
+                             {contact.category === 'creator' && contact.channelLink && (
+                               <div className="text-sm text-blue-600 flex items-center gap-2 mt-1">
+                                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                   <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                                 </svg>
+                                 <a href={contact.channelLink} target="_blank" rel="noopener noreferrer" 
+                                    className="hover:underline truncate max-w-xs">
+                                   {contact.channelLink}
+                                 </a>
+                               </div>
+                             )}
                            </div>
                          </td>
                          <td className="px-8 py-6 whitespace-nowrap">

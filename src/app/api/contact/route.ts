@@ -1,16 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_DATABASE_URL || 'mongodb+srv://techbrains21:12qn26ZQoeuPsMlP@proplaycreatives.zvg7ybi.mongodb.net/';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, category } = await request.json();
+    const requestBody = await request.json();
+    const { name, channelName, channelLink, email, category } = requestBody;
 
-    // Validate required fields
-    if (!name || !email || !category) {
+    // Validate required fields based on category
+    if (category === 'brand') {
+      if (!name || !email || !category) {
+        return NextResponse.json(
+          { error: 'Name, email, and category are required for brands' },
+          { status: 400 }
+        );
+      }
+    } else if (category === 'creator') {
+      if (!channelName || !channelLink || !email || !category) {
+        return NextResponse.json(
+          { error: 'Channel name, channel link, email, and category are required for creators' },
+          { status: 400 }
+        );
+      }
+    } else {
       return NextResponse.json(
-        { error: 'Name, email, and category are required' },
+        { error: 'Name/channel name, email, and category are required' },
         { status: 400 }
       );
     }
@@ -51,7 +66,13 @@ export async function POST(request: NextRequest) {
 
     // Create contact document
     const contactData = {
-      name: name.trim(),
+      ...(category === 'brand' 
+        ? { name: name.trim() }
+        : { 
+            channelName: channelName.trim(),
+            channelLink: channelLink.trim()
+          }
+      ),
       email: email.toLowerCase().trim(),
       category,
       createdAt: new Date(),
@@ -114,13 +135,21 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
+    // Validate ObjectId format
+    if (!ObjectId.isValid(id)) {
+      return NextResponse.json(
+        { error: 'Invalid contact ID format' },
+        { status: 400 }
+      );
+    }
+
     const client = new MongoClient(MONGODB_URI);
     await client.connect();
 
     const db = client.db('proplaycreatives');
     const collection = db.collection('contacts');
 
-    const result = await collection.deleteOne({ _id: id });
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
     await client.close();
 
