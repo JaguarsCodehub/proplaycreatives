@@ -6,6 +6,18 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { FlipWords } from './flip-words';
 
+// Type definitions for form data
+interface BrandFormData {
+  name: string;
+  email: string;
+}
+
+interface CreatorFormData {
+  channelName: string;
+  email: string;
+  channelLink: string;
+}
+
 function ElegantShape({
   className,
   delay = 0,
@@ -78,12 +90,12 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   
   // Form state
-  const [brandForm, setBrandForm] = useState({
+  const [brandForm, setBrandForm] = useState<BrandFormData>({
     name: '',
     email: ''
   });
   
-  const [creatorForm, setCreatorForm] = useState({
+  const [creatorForm, setCreatorForm] = useState<CreatorFormData>({
     channelName: '',
     email: '',
     channelLink: ''
@@ -104,8 +116,11 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
         },
         body: JSON.stringify({
           ...(category === 'brand' 
-            ? { name: (formData as any).name } 
-            : { channelName: (formData as any).channelName, channelLink: (formData as any).channelLink }
+            ? { name: (formData as BrandFormData).name } 
+            : { 
+                channelName: (formData as CreatorFormData).channelName, 
+                channelLink: (formData as CreatorFormData).channelLink 
+              }
           ),
           email: formData.email,
           category
