@@ -6,6 +6,18 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { FlipWords } from './flip-words';
 
+// Type definitions for form data
+interface BrandFormData {
+  name: string;
+  email: string;
+}
+
+interface CreatorFormData {
+  channelName: string;
+  email: string;
+  channelLink: string;
+}
+
 function ElegantShape({
   className,
   delay = 0,
@@ -78,14 +90,15 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   
   // Form state
-  const [brandForm, setBrandForm] = useState({
+  const [brandForm, setBrandForm] = useState<BrandFormData>({
     name: '',
     email: ''
   });
   
-  const [creatorForm, setCreatorForm] = useState({
-    name: '',
-    email: ''
+  const [creatorForm, setCreatorForm] = useState<CreatorFormData>({
+    channelName: '',
+    email: '',
+    channelLink: ''
   });
 
   const handleSubmit = async (e: React.FormEvent, category: 'brand' | 'creator') => {
@@ -102,7 +115,13 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
+          ...(category === 'brand' 
+            ? { name: (formData as BrandFormData).name } 
+            : { 
+                channelName: (formData as CreatorFormData).channelName, 
+                channelLink: (formData as CreatorFormData).channelLink 
+              }
+          ),
           email: formData.email,
           category
         }),
@@ -116,7 +135,7 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
         if (category === 'brand') {
           setBrandForm({ name: '', email: '' });
         } else {
-          setCreatorForm({ name: '', email: '' });
+          setCreatorForm({ channelName: '', email: '', channelLink: '' });
         }
         // Close modal after 2 seconds
         setTimeout(() => {
@@ -299,16 +318,16 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-poppins font-medium text-gray-700 mb-2">
-                        Full Name *
+                        Creator Name *
                       </label>
                       <input
                         type="text"
-                        name="name"
-                        value={creatorForm.name}
+                        name="channelName"
+                        value={creatorForm.channelName}
                         onChange={(e) => handleInputChange(e, 'creator')}
                         required
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg font-poppins focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
-                        placeholder="Enter your full name"
+                        placeholder="Enter your channel name"
                         disabled={isLoading}
                       />
                     </div>
@@ -325,6 +344,22 @@ function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                         required
                         className="w-full px-4 py-3 border border-gray-200 rounded-lg font-poppins focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
                         placeholder="Enter your email address"
+                        disabled={isLoading}
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-poppins font-medium text-gray-700 mb-2">
+                        Channel Link *
+                      </label>
+                      <input
+                        type="url"
+                        name="channelLink"
+                        value={creatorForm.channelLink}
+                        onChange={(e) => handleInputChange(e, 'creator')}
+                        required
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg font-poppins focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
+                        placeholder="https://youtube.com/@yourchannel"
                         disabled={isLoading}
                       />
                     </div>

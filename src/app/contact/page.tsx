@@ -86,7 +86,7 @@ export default function ContactPage() {
             <div className='w-full border-t border-gray-200 my-4'></div>
             <div className='flex flex-col items-center'>
               <span className='text-gray-600 font-poppins text-base mb-1 tracking-wide'>
-                Executives
+                Partners
               </span>
               <span className='font-poppins text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 font-semibold tracking-tight'>
                 Rohit Daundkar & Ritesh Daundkar

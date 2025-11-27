@@ -5,7 +5,9 @@ import { X, Mail, Calendar, Building2, Users, MapPin, Phone, Globe } from 'lucid
 
 interface Contact {
   _id: string;
-  name: string;
+  name?: string; // For brands
+  channelName?: string; // For creators
+  channelLink?: string; // For creators
   email: string;
   category: 'brand' | 'creator';
   createdAt: string;
@@ -110,7 +112,9 @@ export default function ContactDetailModal({ contact, isOpen, onClose, onDelete 
                       )}
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 font-poppins mb-2">{contact.name}</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 font-poppins mb-2">
+                        {contact.category === 'brand' ? contact.name : contact.channelName}
+                      </h3>
                       <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${
                         contact.category === 'brand'
                           ? 'bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800'
@@ -131,6 +135,20 @@ export default function ContactDetailModal({ contact, isOpen, onClose, onDelete 
                       <Mail className="w-5 h-5 text-gray-500" />
                       <span className="text-gray-700 font-poppins font-medium">{contact.email}</span>
                     </div>
+                    
+                    {contact.category === 'creator' && contact.channelLink && (
+                      <div className="flex items-center gap-4 p-3 bg-white/50 rounded-xl">
+                        <Globe className="w-5 h-5 text-gray-500" />
+                        <a 
+                          href={contact.channelLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 font-poppins font-medium hover:underline truncate"
+                        >
+                          {contact.channelLink}
+                        </a>
+                      </div>
+                    )}
                     
                     <div className="flex items-center gap-4 p-3 bg-white/50 rounded-xl">
                       <Calendar className="w-5 h-5 text-gray-500" />
